@@ -77,23 +77,26 @@ const sectionCenter = document.querySelector('.section-center');
 const btnContainer = document.querySelector('.btn-container');
 
 window.addEventListener('DOMContentLoaded', function () {
-  displayMenuItems();
+  displayMenuItems(menu);
   displayButtons();
 });
 
 btnContainer.addEventListener('click', function (e) {
   if (e.target.classList.contains('filter-btn')) {
     const filteredMenu = menu.filter(function (item) {
+      if (e.target.dataset.id === 'all') {
+        return menu;
+      }
       if (item.category === e.target.dataset.id) {
         return item;
       }
     });
-    console.log(filteredMenu);
+    displayMenuItems(filteredMenu);
   }
 });
 
-function displayMenuItems() {
-  const items = menu
+function displayMenuItems(itemsToDisplay) {
+  const items = itemsToDisplay
     .map(function (item) {
       return `
     <article class="menu-item">
@@ -123,7 +126,6 @@ function displayButtons() {
     },
     ['all']
   );
-  console.log(BtnCategories);
 
   btnContainer.innerHTML = BtnCategories.map(function (category) {
     return `
