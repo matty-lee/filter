@@ -1,4 +1,7 @@
-const menu = [
+import displayMenuItems from './displayMenu.js';
+import displayButtons from './displayButtons.js';
+
+export const menu = [
   {
     id: 1,
     title: 'buttermilk pancakes',
@@ -73,63 +76,11 @@ const menu = [
   },
 ];
 
-const sectionCenter = document.querySelector('.section-center');
-const btnContainer = document.querySelector('.btn-container');
-
 window.addEventListener('DOMContentLoaded', function () {
   displayMenuItems(menu);
   displayButtons();
 });
 
-btnContainer.addEventListener('click', function (e) {
-  if (e.target.classList.contains('filter-btn')) {
-    const filteredMenu = menu.filter(function (item) {
-      if (e.target.dataset.id === 'all') {
-        return menu;
-      }
-      if (item.category === e.target.dataset.id) {
-        return item;
-      }
-    });
-    displayMenuItems(filteredMenu);
-  }
-});
 
-function displayMenuItems(itemsToDisplay) {
-  const items = itemsToDisplay
-    .map(function (item) {
-      return `
-    <article class="menu-item">
-          <img src="${item.img}" class="photo" alt="${item.title}" />
-          <div class="item-info">
-            <header>
-              <h4>${item.title}</h4>
-              <h4 class="price">$${item.price}</h4>
-            </header>
-            <p class="item-text">${item.desc}</p>
-          </div>
-        </article> 
-    `;
-    })
-    .join('');
-  // console.log(items);
-  sectionCenter.innerHTML = items;
-}
 
-function displayButtons() {
-  const BtnCategories = menu.reduce(
-    function (acc, currItem) {
-      if (!acc.includes(currItem.category)) {
-        acc.push(currItem.category);
-      }
-      return acc;
-    },
-    ['all']
-  );
 
-  btnContainer.innerHTML = BtnCategories.map(function (category) {
-    return `
-    <button class="filter-btn" type="button" data-id="${category}">${category}</button>
-    `;
-  }).join('');
-}
