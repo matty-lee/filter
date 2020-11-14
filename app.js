@@ -81,6 +81,17 @@ window.addEventListener('DOMContentLoaded', function () {
   displayButtons();
 });
 
+btnContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('filter-btn')) {
+    const filteredMenu = menu.filter(function (item) {
+      if (item.category === e.target.dataset.id) {
+        return item;
+      }
+    });
+    console.log(filteredMenu);
+  }
+});
+
 function displayMenuItems() {
   const items = menu
     .map(function (item) {
@@ -114,10 +125,9 @@ function displayButtons() {
   );
   console.log(BtnCategories);
 
-  btnContainer.innerHTML = BtnCategories.map(function(category){
+  btnContainer.innerHTML = BtnCategories.map(function (category) {
     return `
     <button class="filter-btn" type="button" data-id="${category}">${category}</button>
     `;
-  }).join('')
-
+  }).join('');
 }
